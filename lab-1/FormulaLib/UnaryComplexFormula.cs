@@ -7,7 +7,7 @@ namespace FormulaLib
             if (formula[0] != '(' || formula[formula.Length - 1] != ')')
                 return false;
 
-            formula = formula.Trim();
+            formula = formula.Substring(1, formula.Length - 2);
 
             if (formula[0] != '!')
                 return false;

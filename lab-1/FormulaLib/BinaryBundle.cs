@@ -6,7 +6,10 @@ namespace FormulaLib
     {
         private static List<char> operation = new List<char>()
         {
-            '&', '|'
+            '&', // конъюнкция
+            '|', // дизъюнкция
+            '~', // эквиваленция
+            '>'  // импликация
         };
         
         internal static bool Check(char symbol)

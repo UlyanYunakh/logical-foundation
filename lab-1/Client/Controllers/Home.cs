@@ -1,4 +1,5 @@
 using System;
+using FormulaLib;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
@@ -8,13 +9,22 @@ namespace Client.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(false);
+            return View();
         }
 
         [HttpPost]
         public IActionResult Index(string text)
         {
-            return View(true);
+            bool isFormula = Formula.Check(text);
+            bool isDNF = false;
+
+            if (isFormula)
+                isDNF = DNF.Check(text);
+
+            ViewBag.IsFormula = isFormula;
+            ViewBag.IsDNF = isDNF;
+
+            return View();
         }
     }
 }

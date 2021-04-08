@@ -1,9 +1,15 @@
+using System;
+
 namespace FormulaLib
 {
     internal static class BinaryComplexFormula
     {
-        internal static bool Check(string formula)
+        private static bool FindSubFormula(string formula, out string firstFormula, out string secondFormula, out int index)
         {
+            firstFormula = "";
+            secondFormula = "";
+            index = -1;
+
             if (formula[0] != '(' || formula[formula.Length - 1] != ')')
                 return false;
 
@@ -13,16 +19,10 @@ namespace FormulaLib
             if (operationIndex == -1)
                 return false;
 
-            string firstFormula = formula.Substring(0, operationIndex);
-            string secondFormula = formula.Substring(operationIndex + 1, formula.Length - operationIndex - 1);
-
-            bool first = Formula.Check(firstFormula);
-            bool second = Formula.Check(secondFormula);
-
-            if (first && second)
-                return true;
-
-            return false;
+            firstFormula = formula.Substring(0, operationIndex);
+            secondFormula = formula.Substring(operationIndex + 1, formula.Length - operationIndex - 1);
+            index = operationIndex + 1;
+            return true;
         }
 
         private static int GetOperationIndex(string formula)
@@ -49,6 +49,45 @@ namespace FormulaLib
             }
 
             return index;
+        }
+
+        internal static bool Check(string formula)
+        {
+            string firstFormula;
+            string secondFormula;
+
+            if (!FindSubFormula(formula, out firstFormula, out secondFormula, out int index))
+                return false;
+
+            bool first = Formula.Check(firstFormula);
+            bool second = Formula.Check(secondFormula);
+
+            if (first && second)
+                return true;
+
+            return false;
+        }
+
+        internal static bool CheckDNF(string formula)
+        {
+            string firstFormula;
+            string secondFormula;
+            int index;
+
+            if (!FindSubFormula(formula, out firstFormula, out secondFormula, out index))
+                return false;
+
+            if (formula[index] == '&')
+                if (firstFormula.IndexOf('|') != -1 || secondFormula.IndexOf('|') != -1)
+                    return false;
+
+            bool first = Formula.CheckDNF(firstFormula);
+            bool second = Formula.CheckDNF(secondFormula);
+
+            if (first && second)
+                return true;
+
+            return false;
         }
     }
 }

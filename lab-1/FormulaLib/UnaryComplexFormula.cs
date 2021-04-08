@@ -2,7 +2,7 @@ namespace FormulaLib
 {
     internal static class UnaryCompexFormula
     {
-        public static bool Check(string formula)
+        private static bool FindSubFormula(ref string formula)
         {
             if (formula[0] != '(' || formula[formula.Length - 1] != ')')
                 return false;
@@ -14,7 +14,26 @@ namespace FormulaLib
 
             formula = formula.Substring(1);
 
+            return true;
+        }
+
+        public static bool Check(string formula)
+        {
+            if (!FindSubFormula(ref formula))
+                return false;
+
             if (Formula.Check(formula))
+                return true;
+
+            return false;
+        }
+
+        public static bool CheckDNF(string formula)
+        {
+            if (!FindSubFormula(ref formula))
+                return false;
+
+            if (Formula.CheckDNF(formula))
                 return true;
 
             return false;

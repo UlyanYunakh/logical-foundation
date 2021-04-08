@@ -12,5 +12,16 @@ namespace FormulaLib
                 
             return false;
         }
+
+        internal static bool CheckDNF(string formula)
+        {
+            if (UnaryCompexFormula.CheckDNF(formula))
+                return true;
+
+            if (BinaryComplexFormula.CheckDNF(formula))
+                return true;
+                
+            return false;
+        }
     }
 }

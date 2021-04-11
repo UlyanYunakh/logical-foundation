@@ -30,6 +30,10 @@
                 </div>
 
                 <div id="answer">
+                    @if(ViewBag.Text != null)
+                    {
+                        <p>Строка: @ViewBag.Text</p>
+                    }
                     @if (ViewBag.IsFormula == true)
                     {
                         <p class="text-success">Строка является формулой.</p>

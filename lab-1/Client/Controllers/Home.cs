@@ -23,6 +23,7 @@ namespace Client.Controllers
 
             ViewBag.IsFormula = isFormula;
             ViewBag.IsDNF = isDNF;
+            ViewBag.Text = text;
 
             return View();
         }

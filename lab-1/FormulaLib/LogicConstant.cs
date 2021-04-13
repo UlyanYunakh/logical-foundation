@@ -1,3 +1,5 @@
+// Ulyan Yunakh, 821704
+
 namespace FormulaLib
 {
     internal class LogicConstant

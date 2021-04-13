@@ -1,3 +1,5 @@
+// Ulyan Yunakh, 821704
+
 namespace FormulaLib
 {
     internal static class AtomicFormula

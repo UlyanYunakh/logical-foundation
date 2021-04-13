@@ -1,4 +1,4 @@
-using System;
+// Ulyan Yunakh, 821704
 
 namespace FormulaLib
 {

@@ -17,10 +17,10 @@ namespace FormulaLib
 
         internal static bool CheckDNF(string formula)
         {
-            if (UnaryCompexFormula.CheckDNF(formula))
+            if (UnaryCompexFormula.CheckAtomic(formula))
                 return true;
 
-            if (BinaryComplexFormula.CheckDNF(formula))
+            if (BinaryComplexFormula.CheckDisjunction(formula))
                 return true;
                 
             return false;

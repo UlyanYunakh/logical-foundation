@@ -12,13 +12,24 @@ namespace FormulaLib
             if (!Formula.Check(formula))
                 return false;
 
-            if (!Formula.PreCheckDNF(formula))
-                return false;
-
-            if (!Formula.CheckDNF(formula))
+            if (!CheckDNF(formula))
                 return false;
 
             return true;
+        }
+
+        internal static bool CheckDNF(string formula)
+        {
+            if (LogicConstant.Check(formula))
+                return false;
+
+            if (AtomicFormula.Check(formula))
+                return true;
+
+            if (ComplexFormula.CheckDNF(formula))
+                return true;
+
+            return false;
         }
     }
 }

@@ -20,27 +20,5 @@ namespace FormulaLib
 
             return false;
         }
-
-        internal static bool PreCheckDNF(string formula)
-        {
-            if (formula.IndexOf('0') != -1 || formula.IndexOf('1') != -1)
-                return false;
-
-            if (formula.IndexOf('~') != -1 || formula.IndexOf('>') != -1)
-                return false;
-
-            return true;
-        }
-
-        internal static bool CheckDNF(string formula)
-        {
-            if (AtomicFormula.Check(formula))
-                return true;
-
-            if (ComplexFormula.CheckDNF(formula))
-                return true;
-
-            return false;
-        }
     }
 }

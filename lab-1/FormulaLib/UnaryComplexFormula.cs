@@ -1,4 +1,6 @@
-// Ulyan Yunakh, 821704
+// Ulyan Yunakh, 821704, Lab-1 LOIS, Variant F
+
+using System;
 
 namespace FormulaLib
 {
@@ -19,7 +21,7 @@ namespace FormulaLib
             return true;
         }
 
-        public static bool Check(string formula)
+        internal static bool Check(string formula)
         {
             if (!FindSubFormula(ref formula))
                 return false;
@@ -30,12 +32,12 @@ namespace FormulaLib
             return false;
         }
 
-        public static bool CheckDNF(string formula)
+        internal static bool CheckDNF(string formula)
         {
             if (!FindSubFormula(ref formula))
                 return false;
 
-            if (Formula.CheckDNF(formula))
+            if (AtomicFormula.Check(formula))
                 return true;
 
             return false;

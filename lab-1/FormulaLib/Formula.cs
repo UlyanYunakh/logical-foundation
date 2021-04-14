@@ -1,4 +1,4 @@
-﻿// Ulyan Yunakh, 821704
+﻿// Ulyan Yunakh, 821704, Lab-1 LOIS, Variant F
 
 namespace FormulaLib
 {
@@ -6,6 +6,9 @@ namespace FormulaLib
     {
         public static bool Check(string formula)
         {
+            if (formula == null)
+                return false;
+                
             if (LogicConstant.Check(formula))
                 return true;
 
@@ -24,9 +27,6 @@ namespace FormulaLib
                 return false;
 
             if (formula.IndexOf('~') != -1 || formula.IndexOf('>') != -1)
-                return false;
-
-            if (formula.IndexOf('|') == -1)
                 return false;
 
             return true;

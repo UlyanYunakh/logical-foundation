@@ -1,4 +1,4 @@
-// Ulyan Yunakh, 821704
+// Ulyan Yunakh, 821704, Lab-1 LOIS, Variant F
 
 namespace FormulaLib
 {
@@ -20,7 +20,12 @@ namespace FormulaLib
                 return false;
 
             firstFormula = formula.Substring(0, operationIndex);
-            secondFormula = formula.Substring(operationIndex + 1, formula.Length - operationIndex - 1);
+
+            int start = operationIndex + 1;
+            if (formula[operationIndex] == '~')
+                start--;
+
+            secondFormula = formula.Substring(start + 1, formula.Length - start - 1);
             index = operationIndex + 1;
             return true;
         }
@@ -41,7 +46,25 @@ namespace FormulaLib
                 if (count != 0)
                     continue;
 
-                if (BinaryBundle.Check(formula[i]))
+                if (formula[i] == '\\' && formula[i + 1] == '/')
+                {
+                    index = i;
+                    break;
+                }
+
+                if (formula[i] == '/' && formula[i + 1] == '\\')
+                {
+                    index = i;
+                    break;
+                }
+
+                if (formula[i] == '-' && formula[i + 1] == '>')
+                {
+                    index = i;
+                    break;
+                }
+
+                if (formula[i] == '~')
                 {
                     index = i;
                     break;
@@ -77,15 +100,30 @@ namespace FormulaLib
             if (!FindSubFormula(formula, out firstFormula, out secondFormula, out index))
                 return false;
 
-            if (formula[index] == '&')
-                if (firstFormula.IndexOf('|') != -1 || secondFormula.IndexOf('|') != -1)
+            if (formula[index] == '/' && formula[index + 1] == '\\')
+            {
+                if (Find(firstFormula))
                     return false;
+                if (Find(secondFormula))
+                    return false;
+            }
 
             bool first = Formula.CheckDNF(firstFormula);
             bool second = Formula.CheckDNF(secondFormula);
 
             if (first && second)
                 return true;
+
+            return false;
+        }
+
+        internal static bool Find(string formula)
+        {
+            for (int i = 0; i < formula.Length; i++)
+            {
+                if (formula[i] == '\\' && formula[i + 1] == '/')
+                    return true;
+            }
 
             return false;
         }

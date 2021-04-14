@@ -1,4 +1,4 @@
-// Ulyan Yunakh, 821704
+// Ulyan Yunakh, 821704, Lab-1 LOIS, Variant F
 
 namespace FormulaLib
 {
@@ -14,17 +14,5 @@ namespace FormulaLib
 
             return true;
         }
-
-        // internal static bool Check(string formula, out bool isLogicConstant)
-        // {
-        //     if (Check(formula))
-        //     {
-        //         isLogicConstant = true;
-        //         return true;
-        //     }
-
-        //     isLogicConstant = false;
-        //     return false;
-        // }
     }
 }

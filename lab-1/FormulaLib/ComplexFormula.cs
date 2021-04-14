@@ -1,4 +1,4 @@
-// Ulyan Yunakh, 821704
+// Ulyan Yunakh, 821704, Lab-1 LOIS, Variant F
 
 namespace FormulaLib
 {

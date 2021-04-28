@@ -59,24 +59,39 @@ namespace FormulaLib
                 if (firstLetterList.IndexOf(c) == -1)
                     return false;
 
-            bool[,] matrix = new bool[(int)Math.Pow(2, firstLetterList.Count), firstLetterList.Count + 2];
+            int num = (int)Math.Pow(2, firstLetterList.Count);
 
-            int rows = matrix.GetUpperBound(0) + 1;
-            int columns = matrix.Length / rows;
-
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < num; i++)
             {
-                var array = Convert.ToString(i, 2).Select(s => s.Equals('1')).ToList();
-                array.Reverse();
-                while (array.Count != firstLetterList.Count)
-                    array.Add(false);
-                array.Reverse();
-                
-                for (int j = 0; j < firstLetterList.Count; j++)
-                    matrix[i, j] = array[j];
+                var firstArray = Convert.ToString(i, 2).ToList();
+
+                firstArray.Reverse();
+                while (firstArray.Count != firstLetterList.Count)
+                    firstArray.Add('0');
+                firstArray.Reverse();
+
+                var secondArray = new List<char>();
+                if (secondLetterList.Count != firstLetterList.Count)
+                    foreach (char c in secondLetterList)
+                        secondArray.Add(firstArray[firstLetterList.IndexOf(c)]);
+                else secondArray = firstArray;
+
+                string firstLogicalFormula = ToLogical(firstFormula, firstArray, firstLetterList);
+                string secondLogicalFormula = ToLogical(secondFormula, secondArray, secondLetterList);
+
+                if (Calculate(firstLogicalFormula))
+                    if (!Calculate(secondLogicalFormula))
+                        return false;
             }
 
             return true;
+        }
+
+        public static string ToLogical(string formula, List<char> boolList, List<char> charList)
+        {
+            foreach (char c in charList)
+                formula = formula.Replace(c, boolList[charList.IndexOf(c)]);
+            return formula;
         }
     }
 }

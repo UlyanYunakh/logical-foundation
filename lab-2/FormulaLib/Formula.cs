@@ -55,9 +55,26 @@ namespace FormulaLib
             List<char> firstLetterList = Alphabet.FindLetters(firstFormula);
             List<char> secondLetterList = Alphabet.FindLetters(secondFormula);
 
-            foreach(char c in secondLetterList)
-                if(firstLetterList.IndexOf(c) == -1)
+            foreach (char c in secondLetterList)
+                if (firstLetterList.IndexOf(c) == -1)
                     return false;
+
+            bool[,] matrix = new bool[(int)Math.Pow(2, firstLetterList.Count), firstLetterList.Count + 2];
+
+            int rows = matrix.GetUpperBound(0) + 1;
+            int columns = matrix.Length / rows;
+
+            for (int i = 0; i < rows; i++)
+            {
+                var array = Convert.ToString(i, 2).Select(s => s.Equals('1')).ToList();
+                array.Reverse();
+                while (array.Count != firstLetterList.Count)
+                    array.Add(false);
+                array.Reverse();
+                
+                for (int j = 0; j < firstLetterList.Count; j++)
+                    matrix[i, j] = array[j];
+            }
 
             return true;
         }

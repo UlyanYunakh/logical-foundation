@@ -25,6 +25,25 @@ namespace FormulaLib
             return false;
         }
 
+        internal static bool Calculate(string formula)
+        {
+            try
+            {
+                return LogicConstant.Calculate(formula);
+            }
+            catch
+            { }
+
+            try
+            {
+                return ComplexFormula.Calculate(formula);
+            }
+            catch
+            {
+                throw new Exception();
+            }
+        }
+
         public static bool Compare(string firstFormula, string secondFormula)
         {
             if (!Check(firstFormula))
@@ -36,8 +55,9 @@ namespace FormulaLib
             List<char> firstLetterList = Alphabet.FindLetters(firstFormula);
             List<char> secondLetterList = Alphabet.FindLetters(secondFormula);
 
-            if (!firstLetterList.SequenceEqual(secondLetterList))
-                return false;
+            foreach(char c in secondLetterList)
+                if(firstLetterList.IndexOf(c) == -1)
+                    return false;
 
             return true;
         }

@@ -66,7 +66,8 @@ namespace FormulaLib
                 var firstArray = Convert.ToString(i, 2).ToList();
 
                 firstArray.Reverse();
-                while (firstArray.Count != firstLetterList.Count)
+                int count = Math.Abs(firstLetterList.Count - firstArray.Count);
+                for (int j = 0; j < count; j++)
                     firstArray.Add('0');
                 firstArray.Reverse();
 

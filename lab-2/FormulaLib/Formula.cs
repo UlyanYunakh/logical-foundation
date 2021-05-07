@@ -46,39 +46,25 @@ namespace FormulaLib
 
         public static bool Compare(string firstFormula, string secondFormula)
         {
-            if (!Check(firstFormula))
-                return false;
-
-            if (!Check(secondFormula))
-                return false;
-
             List<char> firstLetterList = Alphabet.FindLetters(firstFormula);
             List<char> secondLetterList = Alphabet.FindLetters(secondFormula);
 
-            foreach (char c in secondLetterList)
-                if (firstLetterList.IndexOf(c) == -1)
-                    return false;
+            var letterList = firstLetterList.Union(secondLetterList).ToList();
 
-            int num = (int)Math.Pow(2, firstLetterList.Count);
+            int num = (int)Math.Pow(2, letterList.Count);
 
             for (int i = 0; i < num; i++)
             {
-                var firstArray = Convert.ToString(i, 2).ToList();
+                var boolList = Convert.ToString(i, 2).ToList();
 
-                firstArray.Reverse();
-                int count = Math.Abs(firstLetterList.Count - firstArray.Count);
+                boolList.Reverse();
+                int count = Math.Abs(letterList.Count - boolList.Count);
                 for (int j = 0; j < count; j++)
-                    firstArray.Add('0');
-                firstArray.Reverse();
+                    boolList.Add('0');
+                boolList.Reverse();
 
-                var secondArray = new List<char>();
-                if (secondLetterList.Count != firstLetterList.Count)
-                    foreach (char c in secondLetterList)
-                        secondArray.Add(firstArray[firstLetterList.IndexOf(c)]);
-                else secondArray = firstArray;
-
-                string firstLogicalFormula = ToLogical(firstFormula, firstArray, firstLetterList);
-                string secondLogicalFormula = ToLogical(secondFormula, secondArray, secondLetterList);
+                string firstLogicalFormula = ToLogical(firstFormula, boolList, letterList);
+                string secondLogicalFormula = ToLogical(secondFormula, boolList, letterList);
 
                 if (Calculate(firstLogicalFormula))
                     if (!Calculate(secondLogicalFormula))

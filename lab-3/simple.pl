@@ -20,3 +20,7 @@ solve([State | OtherStates], FinalState, [Move | OtherMoves]) :-
   safe(NextState),
   not_member(NextState, [State | OtherStates]),
   solve([NextState, State | OtherStates], FinalState, OtherMoves).
+
+
+task(StartState, FinalState, Moves) :-
+  solve([StartState], FinalState, Moves).
